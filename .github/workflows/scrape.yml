@@ -1,0 +1,38 @@
+name: Update Sound Index
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/30 * * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - run: pip install -r requirements.txt
+
+      - run: playwright install --with-deps chromium
+
+      - run: python scraper.py
+
+      - name: Commit sound.json
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+
+          git add sound.json
+
+          git diff --staged --quiet || (
+            git commit -m "update sound.json"
+            git push
+          )
