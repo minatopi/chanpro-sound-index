@@ -2,32 +2,34 @@ from playwright.sync_api import sync_playwright
 from datetime import datetime, timezone
 import json
 import re
-import time
 
 
 URL = "https://chanpro.jp/00-program-profile/1724731678594x659718187856833700"
 
 
-def clean_title(t):
-    t = t.strip()
-    t = re.sub(r"\s+", " ", t)
-    return t
+def clean(s):
+    return re.sub(r"\s+", " ", s.strip())
 
 
-def classify(title):
+def get_type(title):
+
     if "サウンドプログラミング" in title:
         return "sound"
 
-    if "Python" in title or "HTML" in title or "テキスト" in title:
+    if (
+        "Python" in title
+        or "HTML" in title
+        or "コード" in title
+    ):
         return "text"
 
-    return "other"
+    return None
 
 
 
 def scrape():
 
-    results = {}
+    data = {}
 
     with sync_playwright() as p:
 
@@ -38,108 +40,74 @@ def scrape():
         page = browser.new_page()
 
 
-        # 通信確認用
-        page.on(
-            "response",
-            lambda r: print(
-                "RESPONSE:",
-                r.url
-            )
-        )
-
-
         page.goto(
             URL,
             wait_until="domcontentloaded"
         )
 
-
-        page.wait_for_timeout(10000)
+        page.wait_for_timeout(8000)
 
 
         cards = page.locator(
             "div.clickable-element"
         )
 
-        count = cards.count()
 
-        print(
-            "cards:",
-            count
-        )
+        for i in range(cards.count()):
 
-
-        for i in range(count):
+            card = cards.nth(i)
 
             try:
 
-                card = cards.nth(i)
+                title = clean(
+                    card.locator(
+                        "div.bubble-element.Text"
+                    ).first.inner_text()
+                )
 
 
-                text = card.inner_text()
+                kind = get_type(title)
 
-                lines = [
-                    x.strip()
-                    for x in text.split("\n")
-                    if x.strip()
-                ]
-
-
-                if not lines:
+                if not kind:
                     continue
 
 
-                title = clean_title(lines[0])
-
-
-                if title in [
-                    "ログイン",
-                    "みなと"
-                ]:
-                    continue
-
-
-                kind = classify(title)
-
-
-                if kind == "other":
-                    continue
-
-
-                print()
-                print("TITLE")
                 print(title)
 
 
-                old = page.url
+                # クリック前
+                before = page.url
 
 
-                # navigation禁止
-                card.click(
-                    timeout=5000
+                # 新しいURL監視
+                with page.expect_popup(
+                    timeout=3000
+                ) as popup:
+
+                    card.click()
+
+
+                new_page = popup.value
+
+                new_page.wait_for_load_state(
+                    "domcontentloaded"
                 )
 
 
-                page.wait_for_timeout(
-                    2000
-                )
-
-
-                new = page.url
+                target = new_page.url
 
 
                 print(
-                    "before:",
-                    old
-                )
-
-                print(
-                    "after:",
-                    new
+                    "FOUND:",
+                    target
                 )
 
 
-                item = results.setdefault(
+                new_page.close()
+
+
+
+                item = data.setdefault(
                     title,
                     {
                         "title": title,
@@ -152,12 +120,12 @@ def scrape():
 
                 if kind == "sound":
 
-                    item["sound_url"] = new
+                    item["sound_url"] = target
 
 
-                elif kind == "text":
+                if kind == "text":
 
-                    item["text_url"] = new
+                    item["text_url"] = target
 
 
                 item["updated"] = (
@@ -167,19 +135,11 @@ def scrape():
                 )
 
 
-                # 戻る
-                page.goto(
-                    URL,
-                    wait_until="domcontentloaded"
-                )
-
-                page.wait_for_timeout(5000)
-
-
             except Exception as e:
 
+                # popupなしの場合
                 print(
-                    "ERROR",
+                    "skip",
                     i,
                     e
                 )
@@ -188,14 +148,15 @@ def scrape():
         browser.close()
 
 
-    return list(results.values())
+    return list(data.values())
+
 
 
 
 if __name__ == "__main__":
 
 
-    data = scrape()
+    result = scrape()
 
 
     output = {
@@ -206,10 +167,10 @@ if __name__ == "__main__":
             ).isoformat(),
 
         "count":
-            len(data),
+            len(result),
 
         "programs":
-            data
+            result
 
     }
 
@@ -229,10 +190,6 @@ if __name__ == "__main__":
 
 
     print(
-        "SAVED sound.json"
-    )
-
-    print(
-        "COUNT:",
-        len(data)
+        "saved",
+        len(result)
     )
