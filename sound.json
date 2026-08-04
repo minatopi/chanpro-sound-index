@@ -1,60 +1,198 @@
 {
-  "last_updated": "2026-08-03T23:39:52.037836+00:00",
-  "count": 9,
+  "last_updated": "2026-08-04T03:22:20.257713+00:00",
+  "count": 32,
   "programs": [
     {
       "title": "「あいつら全員同窓会 ずっと真夜中でいいのに。【サウンドプログラミング】」",
       "sound_url": "https://chanpro.jp/00-program-share?log=1776330056122x485789297380163600",
       "text_url": "",
-      "updated": "2026-08-03T23:39:44.887924+00:00"
+      "updated": "2026-08-04T03:22:00.636238+00:00"
     },
     {
       "title": "「前前前世 RADWIMPS【サウンドプログラミング】」",
       "sound_url": "https://chanpro.jp/00-program-share?log=1771916461041x778828010437476400",
       "text_url": "",
-      "updated": "2026-08-03T23:39:45.679520+00:00"
+      "updated": "2026-08-04T03:22:01.172796+00:00"
     },
     {
       "title": "「千本桜 初音ミク【サウンドプログラミング】」",
       "sound_url": "https://chanpro.jp/00-program-share?log=1771923798230x527669363199442940",
       "text_url": "",
-      "updated": "2026-08-03T23:39:46.374501+00:00"
+      "updated": "2026-08-04T03:22:01.704474+00:00"
     },
     {
       "title": "「怪獣 YOASOBI【サウンドプログラミング】」",
       "sound_url": "https://chanpro.jp/00-program-share?log=1772004106153x257764706842574850",
       "text_url": "",
-      "updated": "2026-08-03T23:39:47.106443+00:00"
+      "updated": "2026-08-04T03:22:02.291001+00:00"
     },
     {
       "title": "「（実験）アイドル YOASOBI【サウンドプログラミング】」",
       "sound_url": "https://chanpro.jp/00-program-share?log=1772244750362x529671819591155700",
       "text_url": "",
-      "updated": "2026-08-03T23:39:47.854734+00:00"
+      "updated": "2026-08-04T03:22:02.865007+00:00"
     },
     {
       "title": "「IRIS OUT 米津玄師【サウンドプログラミング】 フリーズなし！」",
       "sound_url": "https://chanpro.jp/00-program-share?log=1774834029694x263122429593780220",
       "text_url": "",
-      "updated": "2026-08-03T23:39:48.586695+00:00"
+      "updated": "2026-08-04T03:22:03.440040+00:00"
     },
     {
       "title": "「ライラック Mrs. GREEN APPLE【サウンドプログラミング】」",
       "sound_url": "https://chanpro.jp/00-program-share?log=1773651297878x515208461944881150",
       "text_url": "",
-      "updated": "2026-08-03T23:39:49.340825+00:00"
+      "updated": "2026-08-04T03:22:04.004543+00:00"
     },
     {
       "title": "「ケセラセラ Mrs. GREEN APPLE【サウンドプログラミング】」」",
       "sound_url": "https://chanpro.jp/00-program-share?log=1773727940534x989461413100781600",
       "text_url": "",
-      "updated": "2026-08-03T23:39:51.013853+00:00"
+      "updated": "2026-08-04T03:22:04.822834+00:00"
     },
     {
       "title": "「ひまわりの約束 秦 基博【サウンドプログラミング】」",
       "sound_url": "https://chanpro.jp/00-program-share?log=1773464416335x397079000908300300",
       "text_url": "",
-      "updated": "2026-08-03T23:39:51.905564+00:00"
+      "updated": "2026-08-04T03:22:05.492282+00:00"
+    },
+    {
+      "title": "「三原色 YOASOBI【サウンドプログラミング】」",
+      "sound_url": "https://chanpro.jp/00-program-share?log=1771807106084x308590651003895800",
+      "text_url": "",
+      "updated": "2026-08-04T03:22:06.132375+00:00"
+    },
+    {
+      "title": "「グッバイ宣言 Chinozo【サウンドプログラミング】」",
+      "sound_url": "https://chanpro.jp/00-program-share?log=1772003064321x889172511642878000",
+      "text_url": "",
+      "updated": "2026-08-04T03:22:06.674279+00:00"
+    },
+    {
+      "title": "「群青 YOASOBI【サウンドプログラミング】」",
+      "sound_url": "https://chanpro.jp/00-program-share?log=1772007659799x534766242295971840",
+      "text_url": "",
+      "updated": "2026-08-04T03:22:07.266725+00:00"
+    },
+    {
+      "title": "「明日はきっといい日になる 高橋 優 【サウンドプログラミング】」",
+      "sound_url": "https://chanpro.jp/00-program-share?log=1773464120455x930085777847877600",
+      "text_url": "",
+      "updated": "2026-08-04T03:22:07.964190+00:00"
+    },
+    {
+      "title": "「夜に駆ける YOASOBI【サウンドプログラミング】」",
+      "sound_url": "https://chanpro.jp/00-program-share?log=1773464876057x485561005606174700",
+      "text_url": "",
+      "updated": "2026-08-04T03:22:08.515011+00:00"
+    },
+    {
+      "title": "「スパークル RADWIMPS【サウンドプログラミング】」",
+      "sound_url": "https://chanpro.jp/00-program-share?log=1773819896364x768106252669288400",
+      "text_url": "",
+      "updated": "2026-08-04T03:22:09.439690+00:00"
+    },
+    {
+      "title": "「うっせぇわ Ado【サウンドプログラミング】」",
+      "sound_url": "https://chanpro.jp/00-program-share?log=1773988685125x272839207908016130",
+      "text_url": "",
+      "updated": "2026-08-04T03:22:10.031515+00:00"
+    },
+    {
+      "title": "「晩餐歌 tuki【サウンドプログラミング】」",
+      "sound_url": "https://chanpro.jp/00-program-share?log=1774164105228x541420111785099260",
+      "text_url": "",
+      "updated": "2026-08-04T03:22:10.795138+00:00"
+    },
+    {
+      "title": "「唱 ado【サウンドプログラミング】」",
+      "sound_url": "https://chanpro.jp/00-program-share?log=1774176847016x631555083419779100",
+      "text_url": "",
+      "updated": "2026-08-04T03:22:11.459544+00:00"
+    },
+    {
+      "title": "「ラブレター YOASOBI【サウンドプログラミング】」",
+      "sound_url": "https://chanpro.jp/00-program-share?log=1774250230962x332581509346099200",
+      "text_url": "",
+      "updated": "2026-08-04T03:22:12.104336+00:00"
+    },
+    {
+      "title": "「マルバツゲーム（PythonコードをHTMLに変換したもの）」",
+      "sound_url": "",
+      "text_url": "https://chanpro.jp/00-program-share?log=1775449676025x933742745190662100",
+      "updated": "2026-08-04T03:22:12.793235+00:00"
+    },
+    {
+      "title": "「秒針を噛む ずっと真夜中でいいのに。【サウンドプログラミング】」",
+      "sound_url": "https://chanpro.jp/00-program-share?log=1775869098749x748943382028746800",
+      "text_url": "",
+      "updated": "2026-08-04T03:22:13.513144+00:00"
+    },
+    {
+      "title": "「あいつら全員同窓会 ずっと真夜中でいいのに。【サウンドプログラミング】 HTML版」",
+      "sound_url": "https://chanpro.jp/00-program-share?log=1777427258852x998511217408999400",
+      "text_url": "",
+      "updated": "2026-08-04T03:22:14.185302+00:00"
+    },
+    {
+      "title": "「ヴァルキューレの騎行 リッカルド・シャイー指揮 ロイヤル・コンセルトヘボウ管弦楽団【サウンドプログラミング】」",
+      "sound_url": "https://chanpro.jp/00-program-share?log=1777704213429x344137822492426240",
+      "text_url": "",
+      "updated": "2026-08-04T03:22:14.858310+00:00"
+    },
+    {
+      "title": "「World's Smallest Violin AGK【サウンドプログラミング】」",
+      "sound_url": "https://chanpro.jp/00-program-share?log=1777789084400x264522669275217920",
+      "text_url": "",
+      "updated": "2026-08-04T03:22:15.484406+00:00"
+    },
+    {
+      "title": "「愛にできることはまだあるかい RADWIMPS【サウンドプログラミング】」」",
+      "sound_url": "https://chanpro.jp/00-program-share?log=1773821332234x162440200046510080",
+      "text_url": "",
+      "updated": "2026-08-04T03:22:16.199049+00:00"
+    },
+    {
+      "title": "「（実験）大丈夫《天気の子》 RADWIMPS【サウンドプログラミング】」",
+      "sound_url": "https://chanpro.jp/00-program-share?log=1773822327107x499837144860983300",
+      "text_url": "",
+      "updated": "2026-08-04T03:22:16.745011+00:00"
+    },
+    {
+      "title": "「晩餐歌 tuki【サウンドプログラミング】 HTML版」",
+      "sound_url": "https://chanpro.jp/00-program-share?log=1774229461007x900260902425067500",
+      "text_url": "",
+      "updated": "2026-08-04T03:22:17.296023+00:00"
+    },
+    {
+      "title": "「ハルジオン YOASOBI【サウンドプログラミング】」",
+      "sound_url": "https://chanpro.jp/00-program-share?log=1774253069317x126779316342620160",
+      "text_url": "",
+      "updated": "2026-08-04T03:22:17.859763+00:00"
+    },
+    {
+      "title": "「夢灯籠《君の名は。》 RADWIMPS【サウンドプログラミング】」",
+      "sound_url": "https://chanpro.jp/00-program-share?log=1775123765594x787605085896835100",
+      "text_url": "",
+      "updated": "2026-08-04T03:22:18.430398+00:00"
+    },
+    {
+      "title": "「すずめの涙《すずめの戸締り》 RADWIMPS【サウンドプログラミング】」",
+      "sound_url": "https://chanpro.jp/00-program-share?log=1775520822398x943747154076500000",
+      "text_url": "",
+      "updated": "2026-08-04T03:22:18.993372+00:00"
+    },
+    {
+      "title": "「秒針を噛む ずっと真夜中でいいのに。【サウンドプログラミング】 HTML版」",
+      "sound_url": "https://chanpro.jp/00-program-share?log=1775898451525x859769005460684800",
+      "text_url": "",
+      "updated": "2026-08-04T03:22:19.545580+00:00"
+    },
+    {
+      "title": "「SAY YES CHAGE and ASKA【サウンドプログラミング】」",
+      "sound_url": "https://chanpro.jp/00-program-share?log=1775972303460x611763115247534100",
+      "text_url": "",
+      "updated": "2026-08-04T03:22:20.135942+00:00"
     }
   ]
 }
