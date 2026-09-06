@@ -1,4 +1,3 @@
-
 from playwright.sync_api import sync_playwright
 from datetime import datetime, timezone
 import json
@@ -6,88 +5,25 @@ import re
 import time
 
 
-# ============================================================
-# 設定
-# ============================================================
-
 URL = "https://chanpro.jp/00-program-profile/1724731678594x659718187856833700"
 
-OUTPUT_FILE = "sound.json"
+
+def clean_title(t):
+    t = t.strip()
+    t = re.sub(r"\s+", " ", t)
+    return t
 
 
-# ============================================================
-# タイトルをきれいにする
-# ============================================================
-
-def clean_title(title: str) -> str:
-    title = title.strip()
-
-    # 改行・連続スペースを1個にする
-    title = re.sub(r"\s+", " ", title)
-
-    return title
-
-
-# ============================================================
-# プログラムの種類を判定
-# ============================================================
-
-def classify(title: str) -> str:
-
-    # サウンド系
-    if (
-        "サウンドプログラミング" in title
-        or "サウンドプログラム" in title
-    ):
+def classify(title):
+    if "サウンドプログラミング" in title:
         return "sound"
 
-    # テキスト・コード系
-    if (
-        "Python" in title
-        or "HTML" in title
-        or "テキスト" in title
-    ):
+    if "Python" in title or "HTML" in title or "テキスト" in title:
         return "text"
 
     return "other"
 
 
-# ============================================================
-# 現在時刻
-# ============================================================
-
-def now_iso() -> str:
-    return datetime.now(timezone.utc).isoformat()
-
-
-# ============================================================
-# URLを正規化
-# ============================================================
-
-def clean_url(url: str) -> str:
-
-    if not url:
-        return ""
-
-    url = url.strip()
-
-    # 万一 Markdown の
-    # [https://example.com](https://example.com)
-    # のようになっていた場合にURLだけ取り出す
-    match = re.match(
-        r"^\[.*?\]\((https?://.*?)\)$",
-        url
-    )
-
-    if match:
-        url = match.group(1)
-
-    return url
-
-
-# ============================================================
-# プログラムを取得
-# ============================================================
 
 def scrape():
 
@@ -101,41 +37,25 @@ def scrape():
 
         page = browser.new_page()
 
-        # ----------------------------------------------------
-        # 通信確認
-        # ----------------------------------------------------
 
+        # 通信確認用
         page.on(
             "response",
-            lambda response: print(
+            lambda r: print(
                 "RESPONSE:",
-                response.status,
-                response.url
+                r.url
             )
         )
 
-        # ----------------------------------------------------
-        # プロフィールページを開く
-        # ----------------------------------------------------
-
-        print()
-        print("========================================")
-        print("プロフィールページを開いています")
-        print("========================================")
-        print()
 
         page.goto(
             URL,
-            wait_until="domcontentloaded",
-            timeout=60000
+            wait_until="domcontentloaded"
         )
 
-        # ページの読み込み待ち
+
         page.wait_for_timeout(10000)
 
-        # ----------------------------------------------------
-        # カード取得
-        # ----------------------------------------------------
 
         cards = page.locator(
             "div.clickable-element"
@@ -143,222 +63,159 @@ def scrape():
 
         count = cards.count()
 
-        print()
-        print("カード数:", count)
-        print()
+        print(
+            "cards:",
+            count
+        )
 
-        # ----------------------------------------------------
-        # 全カード処理
-        # ----------------------------------------------------
 
         for i in range(count):
 
-            print("----------------------------------------")
-            print(f"{i + 1} / {count}")
-            print("----------------------------------------")
-
             try:
-
-                # ------------------------------------------------
-                # 元ページを毎回確認
-                # ------------------------------------------------
-
-                if page.url != URL:
-                    page.goto(
-                        URL,
-                        wait_until="domcontentloaded",
-                        timeout=60000
-                    )
-
-                    page.wait_for_timeout(3000)
-
-                # カードを再取得
-                cards = page.locator(
-                    "div.clickable-element"
-                )
 
                 card = cards.nth(i)
 
-                # ------------------------------------------------
-                # カード本文
-                # ------------------------------------------------
 
                 text = card.inner_text()
 
                 lines = [
-                    line.strip()
-                    for line in text.split("\n")
-                    if line.strip()
+                    x.strip()
+                    for x in text.split("\n")
+                    if x.strip()
                 ]
 
+
                 if not lines:
-                    print("SKIP: 空のカード")
                     continue
 
-                # ------------------------------------------------
-                # タイトル
-                # ------------------------------------------------
 
                 title = clean_title(lines[0])
 
-                print("TITLE:", title)
 
-                # ------------------------------------------------
-                # 不要なカード
-                # ------------------------------------------------
-
-                if title in (
+                if title in [
                     "ログイン",
                     "みなと"
-                ):
-                    print("SKIP: 不要カード")
+                ]:
                     continue
 
-                # ------------------------------------------------
-                # 種類
-                # ------------------------------------------------
 
                 kind = classify(title)
 
-                print("TYPE:", kind)
 
                 if kind == "other":
-                    print("SKIP: 対象外")
                     continue
 
-                # ------------------------------------------------
-                # クリック前URL
-                # ------------------------------------------------
 
-                before_url = page.url
+                print()
+                print("TITLE")
+                print(title)
 
-                print("BEFORE:", before_url)
 
-                # ------------------------------------------------
-                # カードをクリック
-                # ------------------------------------------------
+                old = page.url
 
+
+                # navigation禁止
                 card.click(
-                    timeout=10000
+                    timeout=5000
                 )
 
-                # 遷移を待つ
-                page.wait_for_timeout(2500)
 
-                # ------------------------------------------------
-                # クリック後URL
-                # ------------------------------------------------
-
-                new_url = clean_url(
-                    page.url
+                page.wait_for_timeout(
+                    2000
                 )
 
-                print("AFTER :", new_url)
 
-                # ------------------------------------------------
-                # log URLか確認
-                # ------------------------------------------------
+                new = page.url
 
-                if "00-program-share" not in new_url:
-                    print(
-                        "WARNING: shareページではありません"
-                    )
 
-                # ------------------------------------------------
-                # 既存データ取得
-                # ------------------------------------------------
+                print(
+                    "before:",
+                    old
+                )
 
-                if title not in results:
+                print(
+                    "after:",
+                    new
+                )
 
-                    results[title] = {
+
+                item = results.setdefault(
+                    title,
+                    {
                         "title": title,
                         "sound_url": "",
                         "text_url": "",
                         "updated": ""
                     }
+                )
 
-                item = results[title]
-
-                # ------------------------------------------------
-                # URL保存
-                # ------------------------------------------------
 
                 if kind == "sound":
 
-                    item["sound_url"] = new_url
+                    item["sound_url"] = new
+
 
                 elif kind == "text":
 
-                    item["text_url"] = new_url
+                    item["text_url"] = new
 
-                # 更新時刻
-                item["updated"] = now_iso()
 
-                print("SAVED:", title)
-
-                # ------------------------------------------------
-                # 元ページへ戻る
-                # ------------------------------------------------
-
-                page.goto(
-                    URL,
-                    wait_until="domcontentloaded",
-                    timeout=60000
+                item["updated"] = (
+                    datetime.now(
+                        timezone.utc
+                    ).isoformat()
                 )
 
-                page.wait_for_timeout(3000)
+
+                # 戻る
+                page.goto(
+                    URL,
+                    wait_until="domcontentloaded"
+                )
+
+                page.wait_for_timeout(5000)
+
 
             except Exception as e:
 
-                print()
-                print("ERROR")
-                print("INDEX:", i)
-                print("ERROR:", repr(e))
-                print()
+                print(
+                    "ERROR",
+                    i,
+                    e
+                )
 
-                # エラーが出ても元ページに戻す
-                try:
-
-                    page.goto(
-                        URL,
-                        wait_until="domcontentloaded",
-                        timeout=60000
-                    )
-
-                    page.wait_for_timeout(3000)
-
-                except Exception as e2:
-
-                    print(
-                        "RETURN ERROR:",
-                        repr(e2)
-                    )
-
-                continue
-
-        # ----------------------------------------------------
-        # ブラウザ終了
-        # ----------------------------------------------------
 
         browser.close()
+
 
     return list(results.values())
 
 
-# ============================================================
-# JSON保存
-# ============================================================
 
-def save_json(data):
+if __name__ == "__main__":
+
+
+    data = scrape()
+
 
     output = {
-        "last_updated": now_iso(),
-        "count": len(data),
-        "programs": data
+
+        "last_updated":
+            datetime.now(
+                timezone.utc
+            ).isoformat(),
+
+        "count":
+            len(data),
+
+        "programs":
+            data
+
     }
 
+
     with open(
-        OUTPUT_FILE,
+        "sound.json",
         "w",
         encoding="utf-8"
     ) as f:
@@ -370,65 +227,12 @@ def save_json(data):
             indent=2
         )
 
-    return output
-
-
-# ============================================================
-# メイン
-# ============================================================
-
-if __name__ == "__main__":
-
-    print()
-    print("========================================")
-    print("Chanpro プログラム取得開始")
-    print("========================================")
-    print()
-
-    data = scrape()
-
-    output = save_json(data)
-
-    print()
-    print("========================================")
-    print("取得完了")
-    print("========================================")
-    print()
 
     print(
-        "保存先:",
-        OUTPUT_FILE
+        "SAVED sound.json"
     )
 
     print(
         "COUNT:",
-        output["count"]
+        len(data)
     )
-
-    print()
-
-    for i, program in enumerate(
-        output["programs"],
-        start=1
-    ):
-
-        print(
-            f"{i}.",
-            program["title"]
-        )
-
-        if program["sound_url"]:
-            print(
-                "   sound:",
-                program["sound_url"]
-            )
-
-        if program["text_url"]:
-            print(
-                "   text :",
-                program["text_url"]
-            )
-
-    print()
-    print("SAVED sound.json")
-
