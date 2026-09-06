@@ -1,3 +1,4 @@
+"""
 from playwright.sync_api import sync_playwright
 from datetime import datetime, timezone
 import json
@@ -236,3 +237,4 @@ if __name__ == "__main__":
         "COUNT:",
         len(data)
     )
+"""
